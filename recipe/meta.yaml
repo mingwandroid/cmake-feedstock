@@ -1,44 +1,47 @@
 {% set major_minor = "3.6" %}
-{% set version = major_minor + ".1" %}
+{% set version = major_minor + ".2" %}
 
 package:
   name: cmake
   version: {{ version }}
 
 source:
-  url: https://cmake.org/files/v{{ major_minor }}/cmake-{{ version }}.tar.gz              # [not win]
-  fn: cmake-{{ version }}.tar.gz                                                          # [not win]
-  sha256: 28ee98ec40427d41a45673847db7a905b59ce9243bb866eaf59dce0f58aaef11                # [not win]
-
-  url: https://cmake.org/files/v{{ major_minor }}/cmake-{{ version }}-win32-x86.zip       # [win]
-  fn: cmake-{{ version }}-win32-x86.zip                                                   # [win]
-  sha256: 60089b4e05a997edda49f40d4b6db883e0ce5bbe9fdedb5106739dbfe58a8055                # [win]
+  url: https://cmake.org/files/v{{ major_minor }}/cmake-{{ version }}.tar.gz
+  fn: cmake-{{ version }}.tar.gz
+  sha256: 189ae32a6ac398bb2f523ae77f70d463a6549926cde1544cd9cc7c6609f8b346
+#  git_url: git@github.com:mingwandroid/cmake.git
+#  git_tag: v{{ version }}_branch
+  patches:
+    - 3.6.2/0001-FindCurses-NAMES-must-not-include-folders.patch
+    - 3.6.2/0002-Add-CMAKE_LANG_IMPLICIT_LINKER_SEARCH_DIRECTORIES.patch
 
 build:
   number: 0
   detect_binary_files_with_prefix: true
 
-requirements:        # [unix]
-  build:             # [unix]
-    - toolchain      # [unix]
+requirements:
+  build:
+    - qt
     - bzip2 1.0.*    # [unix]
     - curl           # [unix]
     - expat          # [unix]
-    - jsoncpp        # [unix]
-    - libarchive     # [unix]
+    - gcc            # [unix]
+#    - jsoncpp        # [unix]
+#    - libarchive     # [unix]
     - ncurses 5.9*   # [unix]
-    - xz 5.2.*       # [unix]
-    - zlib 1.2.*     # [unix]
+    - xz 5.2.*
+    - zlib 1.2.*
 
-  run:               # [unix]
+  run:
+    - qt
     - bzip2 1.0.*    # [unix]
     - curl           # [unix]
     - expat          # [unix]
-    - jsoncpp        # [unix]
-    - libarchive     # [unix]
+#    - jsoncpp        # [unix]
+#    - libarchive     # [unix]
     - ncurses 5.9*   # [unix]
-    - xz 5.2.*       # [unix]
-    - zlib 1.2.*     # [unix]
+    - xz 5.2.*
+    - zlib 1.2.*
 
 test:
   files:
@@ -60,3 +63,4 @@ extra:
     - jakirkham
     - ocefpaf
     - msarahan
+    - mingwandroid

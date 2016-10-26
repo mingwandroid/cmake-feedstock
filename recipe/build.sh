@@ -20,10 +20,13 @@ fi
 ./bootstrap \
              --prefix="${PREFIX}" \
              --system-libs \
-             --no-qt-gui \
+             --qt-gui \
+             --no-system-libarchive \
+             --no-system-jsoncpp \
              -- \
              -DCMAKE_BUILD_TYPE:STRING=Release \
              -DCMAKE_FIND_ROOT_PATH="${PREFIX}" \
+             -DCMAKE_USE_SYSTEM_LIBUV=OFF
 
-make
+make VERBOSE=1
 eval ${LIBRARY_SEARCH_VAR}="${PREFIX}/lib" make install
